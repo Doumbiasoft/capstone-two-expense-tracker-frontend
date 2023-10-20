@@ -14,13 +14,16 @@ import PropTypes from 'prop-types';
 
 import ProfileDropdown from './ProfileDropdown';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import nameAcronym from '../../../helpers/nameAcronym';
 
 const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar}) => {
   const ctx = useContext(CurrentUserContext);
 
-  // 4
+    // 4
   const [anchorEl4, setAnchorEl4] = React.useState(null);
-
+  
+  const shortName = nameAcronym(ctx);
+  
   const handleClick4 = (event) => {
     setAnchorEl4(event.currentTarget);
   };
@@ -105,7 +108,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar}) => {
                 boxShadow: 'none',
               }}
             >
-              <span style={{fontWeight:'bold'}}>MD</span>
+              <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
             </Fab>
           </Box>
             <Box
@@ -127,7 +130,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar}) => {
                   ml: 1,
                 }}
               >
-                Mouhamed
+                {ctx.user.firstName?ctx.user.firstName.split(' ')[0]:''}
               </Typography>
               <FeatherIcon icon="chevron-down" width="20" height="20" />
             </Box>
@@ -161,7 +164,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar}) => {
               }}
               variant="contained"
               color="primary"
-              onClick={ctx.handleLogOut}
+              onClick={ctx.actions.handleLogOut}
             >
               Logout
             </Button>

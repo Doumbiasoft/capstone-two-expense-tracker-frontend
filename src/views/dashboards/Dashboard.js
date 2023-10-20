@@ -9,8 +9,10 @@ import {
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 const BCrumb = [
   {
-    to: '/',
-    title: '',
+    title: 'Home',
+  },
+  {
+    title: 'Dashboard',
   }
 ];
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useContext,useRef,useState,useEffect} from 'react';
 import { Grid, Box, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { useFormData } from '../../hooks/useFormData';
 
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -12,9 +13,95 @@ import PageContainer from '../../components/container/PageContainer';
 import monetizationBro from '../../assets/images/backgrounds/monetization-bro.svg'; 
 
 import LogoIcon from '../../layouts/full-layout/logo/LogoIcon';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-const Register = () => (
-  <PageContainer title="Register" description="this is Register page">
+import Api from '../../api'
+import Spinner from '../../views/spinner/Spinner';
+
+
+export default function Register() {
+  const ctx = useContext(CurrentUserContext);
+  const INITIAL_STATE = {
+    password:'',
+    passwordConfirm:'',
+    firstName:'',
+    lastName:'',
+    email:''
+  };
+
+    const navigateTo = useNavigate();
+    const [message, setMessage] = useState("");
+    const [formData, setFormData, handleChangeFormData] = useFormData(INITIAL_STATE);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const divMessage = useRef("");
+
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+  
+          if(!formData.passwordConfirm.trim()){
+            setMessage("* Please confirm your password!"); 
+          }
+          if(!formData.password.trim()){
+            setMessage("* Please enter your password!"); 
+          }
+          if(!formData.email.trim()) {
+            setMessage("* Please enter a valid email!"); 
+          }
+          if(!formData.lastName.trim()){
+            setMessage("* Please enter your last name!"); 
+          }
+          if(!formData.firstName.trim()){
+            setMessage("* Please enter your first name!"); 
+          }
+        
+          if(formData.password.trim() !=="" && formData.passwordConfirm.trim() !=="" && formData.firstName.trim() !=="" && formData.lastName.trim() !=="" && formData.email.trim() !=="") {
+            if(formData.password.trim() !== formData.passwordConfirm.trim()){
+              setMessage("* Please verify your password, they are not identical!"); 
+            }else{
+              setMessage(""); 
+              setIsSubmitted(true);
+            }
+          };
+      }
+
+
+      useEffect(() => {
+        async function signUp() {
+          try {
+            if (isSubmitted === true && formData) {
+              const userToCreate = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                password: formData.passwordConfirm
+              }
+              let _token = await Api.register(userToCreate);
+              if(_token !== undefined && _token !== "") {
+                ctx.actions.handleToken(_token);
+                setIsSubmitted(false);
+                navigateTo("/");
+              }
+              setIsSubmitted(false);
+            }
+          } catch (error) {
+              ctx.actions.handleToken("");
+              setIsSubmitted(false);
+              setMessage(error);
+          }
+        };
+        signUp();
+        
+      }, [isSubmitted]);
+
+
+    useEffect(() => {
+        divMessage.current.innerHTML = message;
+      },[message]);
+
+
+  return (
+    <PageContainer title="Register" description="this is Register page">
     <Grid container spacing={0} sx={{ height: '100vh', justifyContent: 'center' }}>
       <Grid
         item
@@ -104,42 +191,50 @@ const Register = () => (
                   Sign In
                 </Typography>
               </Box>
+              <Box display="flex" alignItems="center" sx={{height:'30px'}}>
+                      {isSubmitted?<Spinner />:<></>}
+              </Box>
+              <form onSubmit={handleSubmit}>
               <Box
                 sx={{
                   mt: 3,
                 }}
               >
+                 <div style={{color:'red',textAlign:'center'}} ref={divMessage}></div>
                 <CustomFormLabel htmlFor="firstName">First Name</CustomFormLabel>
-                <CustomTextField id="firstName" variant="outlined" fullWidth />
+                <CustomTextField id="firstName" variant="outlined" fullWidth name="firstName" onChange={handleChangeFormData}/>
                 <CustomFormLabel htmlFor="lastName">Last Name</CustomFormLabel>
-                <CustomTextField id="lastName" variant="outlined" fullWidth />
+                <CustomTextField id="lastName" variant="outlined" fullWidth name="lastName" onChange={handleChangeFormData} />
                 <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                <CustomTextField id="email" variant="outlined" fullWidth />
+                <CustomTextField id="email" variant="outlined" fullWidth name="email" onChange={handleChangeFormData} />
                 <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
                 <CustomTextField
                   id="password"
                   variant="outlined"
                   fullWidth
                   type="password"
+                  name="password"
+                  onChange={handleChangeFormData}
                 />
-               <CustomFormLabel htmlFor="confirmPassword">Confirm Password</CustomFormLabel>
+               <CustomFormLabel htmlFor="passwordConfirm">Confirm Password</CustomFormLabel>
                 <CustomTextField
-                  id="confirmPassword"
+                  id="passwordConfirm"
                   variant="outlined"
                   fullWidth
                   sx={{
                     mb: 3,
                   }}
                   type="password"
+                  name="passwordConfirm"
+                  onChange={handleChangeFormData}
                 />
 
                 <Button
+                  type='submit'
                   color="primary"
                   variant="contained"
                   size="large"
                   fullWidth
-                  component={Link}
-                  to="/"
                   sx={{
                     pt: '10px',
                     pb: '10px',
@@ -228,12 +323,13 @@ const Register = () => (
                 </Box>
 
               </Box>
+              </form>
             </Box>
           </Grid>
         </Grid>
       </Grid>
     </Grid>
   </PageContainer>
-);
+  )
+}
 
-export default Register;

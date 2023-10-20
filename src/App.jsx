@@ -58,15 +58,20 @@ function App() {
     }
     getCurrentUser();
    }, [user, token]);
-  
-  const currentCtx = { ...user, 
+
+
+  const ctx = { 
+    user:{...user}, 
     token:token, 
-    handleUser:handleUser,
-     handleToken:handleToken,
-      handleLogOut:handleLogOut 
+    actions:{ 
+        handleUser:handleUser,
+        handleToken:handleToken,
+        handleLogOut:handleLogOut, 
+      }
+   
     };
   return (
-    <CurrentUserContext.Provider value={currentCtx}>
+    <CurrentUserContext.Provider value={ctx}>
     <ThemeProvider theme={theme}>
       <RTL direction={customizer.activeDir}>
         <CssBaseline />

@@ -1,12 +1,20 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { Box, MenuItem, Typography, Divider,Fab } from '@mui/material';
 import FeatherIcon from 'feather-icons-react';
 import { useNavigate } from 'react-router-dom';
+import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import nameAcronym from '../../../helpers/nameAcronym';
+
+
+
 
 export default function ProfileDropdown({setAnchorEl4}) {
+  const ctx = useContext(CurrentUserContext);
   const navigateTo = useNavigate();
 
-  const handleProfile=(e)=>{
+  const shortName = nameAcronym(ctx);
+
+  const handleProfile=()=>{
     setAnchorEl4(null);
      navigateTo("/profile");
   }
@@ -35,7 +43,7 @@ export default function ProfileDropdown({setAnchorEl4}) {
                 boxShadow: 'none',
               }}
             >
-              <span style={{fontWeight:'bold'}}>MD</span>
+                 <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
             </Fab>
         </Box>
         <Box
@@ -49,7 +57,7 @@ export default function ProfileDropdown({setAnchorEl4}) {
               lineHeight: '1.235',
             }}
           >
-            Mouhamed Doumbia
+            {ctx.user.firstName?(ctx.user.firstName +' ' + ctx.user.lastName):''}
           </Typography>
           <Box display="flex" alignItems="center">
             <Typography
@@ -64,7 +72,7 @@ export default function ProfileDropdown({setAnchorEl4}) {
               <FeatherIcon icon="mail" width="18" />
             </Typography>
             <Typography color="textSecondary" variant="h6">
-              doumbiasoft@gmail.com
+            {ctx.user.email?ctx.user.email:<></>}
             </Typography>
           </Box>
         </Box>

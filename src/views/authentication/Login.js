@@ -1,6 +1,7 @@
-import React,{useContext} from 'react';
+import React,{useContext,useRef,useState,useEffect} from 'react';
 import { Grid, Box, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { useFormData } from '../../hooks/useFormData';
 
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -12,9 +13,62 @@ import monetizationBro from '../../assets/images/backgrounds/monetization-bro.sv
 import LogoIcon from '../../layouts/full-layout/logo/LogoIcon';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
+import Api from '../../api'
+import Spinner from '../../views/spinner/Spinner';
 
 export default function Login() {
    const ctx = useContext(CurrentUserContext);
+
+   const INITIAL_STATE = {
+      email:'',
+      password:''
+    };
+    
+    const navigateTo = useNavigate();
+    const [message, setMessage] = useState("");
+    const [formData, setFormData, handleChangeFormData] = useFormData(INITIAL_STATE);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const divMessage = useRef("");
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if(!formData.password.trim()){
+            setMessage("* Please enter a password!"); 
+          }
+        if(!formData.email.trim()){
+            setMessage("* Please enter an email address!"); 
+          }
+        if(formData.email.trim() !=="" && formData.password.trim() !=="") {
+            setMessage(""); 
+            setIsSubmitted(true);
+        };
+      }
+
+      useEffect(() => {
+        async function logIn() {
+          try {
+            if (isSubmitted === true && formData) {
+              let _token = await Api.login(formData);
+              if(_token !== undefined && _token !== "") {
+                  ctx.actions.handleToken(_token);
+                  setIsSubmitted(false);
+                  navigateTo("/");
+              }
+              setIsSubmitted(false);
+            }
+          } catch (error) {
+              ctx.actions.handleToken("");
+              setIsSubmitted(false);
+              setMessage(error);
+          }
+        };
+        logIn();
+        
+      }, [isSubmitted]);
+
+    useEffect(() => {
+        divMessage.current.innerHTML = message;
+      },[message]);
   
   return (
     <>
@@ -79,6 +133,7 @@ export default function Login() {
                 p: 4,
               }}
             >
+             
               <Typography fontWeight="700" variant="h1">
               <LogoIcon title='Expense Tracker' logoSize={90} titleFontSize='30px' TypographyVariant="h1"/>
               </Typography>
@@ -106,134 +161,138 @@ export default function Login() {
                   Create an account
                 </Typography>
               </Box>
-              <Box
-                sx={{
-                  mt: 4,
-                }}
-              >
-                <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                <CustomTextField id="email" variant="outlined" fullWidth />
-                <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                <CustomTextField
-                  id="password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  sx={{
-                    mb: 3,
-                  }}
-                />
+              <Box display="flex" alignItems="center" sx={{height:'30px'}}>
+                      {isSubmitted?<Spinner />:<></>}
+              </Box>
+              <form onSubmit={handleSubmit}>
                 <Box
                   sx={{
-                    display: {
-                      xs: 'block',
-                      sm: 'flex',
-                      lg: 'flex',
-                    },
-                    alignItems: 'center',
+                    mt: 4,
                   }}
                 >
-        
-                </Box>
-
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  component={Link}
-                  to="/"
-                  sx={{
-                    pt: '10px',
-                    pb: '10px',
-                    color: 'white',
-                  }}
-                  onClick={()=>  
-                    ctx.handleToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImRvdW1iaWFzb2Z0QGdtYWlsLmNvbSIsImlhdCI6MTY5NjkwNzc3Mn0.QdXSKT4CV20gip5sxcky-y-UVGAtyCyG2PGd7e87cNA")
-                   }
-                >
-                  Sign In
-                </Button>
-                <Box
-                  sx={{
-                    position: 'relative',
-                    textAlign: 'center',
-                    mt: '20px',
-                    mb: '20px',
-                    '&::before': {
-                      content: '""',
-                      background: (theme) =>
-                        `${theme.palette.mode === 'dark' ? '#42464d' : '#ecf0f2'}`,
-                      height: '1px',
-                      width: '100%',
-                      position: 'absolute',
-                      left: '0',
-                      top: '13px',
-                    },
-                  }}
-                >
-                  <Typography
-                    component="span"
-                    color="textSecondary"
-                    variant="h6"
-                    fontWeight="400"
+                  <div style={{color:'red',textAlign:'center'}} ref={divMessage}></div>
+                  <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
+                  <CustomTextField id="email" variant="outlined" fullWidth name="email" onChange={handleChangeFormData}/>
+                  <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+                  <CustomTextField
+                    id="password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
                     sx={{
-                      position: 'relative',
-                      padding: '0 12px',
-                      background: (theme) =>
-                        `${theme.palette.mode === 'dark' ? '#282c34' : '#fff'}`,
+                      mb: 3,
+                    }}
+                    name="password" onChange={handleChangeFormData}
+                  />
+                  <Box
+                    sx={{
+                      display: {
+                        xs: 'block',
+                        sm: 'flex',
+                        lg: 'flex',
+                      },
+                      alignItems: 'center',
                     }}
                   >
-                    or sign in with
-                  </Typography>
-                </Box>
+          
+                  </Box>
 
-                <Box>
                   <Button
-                    variant="outlined"
+                    type='submit'
+                    color="primary"
+                    variant="contained"
                     size="large"
-                    display="flex"
-                    alignitems="center"
-                    justifycontent="center"
+                    fullWidth
                     sx={{
-                      width: '100%',
-                      borderColor: (theme) =>
-                        `${theme.palette.mode === 'dark' ? '#42464d' : '#dde3e8'}`,
-                      borderWidth: '2px',
-                      textAlign: 'center',
-                      mt: 2,
                       pt: '10px',
                       pb: '10px',
-                      '&:hover': {
-                        borderColor: (theme) =>
-                          `${theme.palette.mode === 'dark' ? '#42464d' : '#dde3e8'}`,
-                        borderWidth: '2px',
+                      color: 'white',
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      textAlign: 'center',
+                      mt: '20px',
+                      mb: '20px',
+                      '&::before': {
+                        content: '""',
+                        background: (theme) =>
+                          `${theme.palette.mode === 'dark' ? '#42464d' : '#ecf0f2'}`,
+                        height: '1px',
+                        width: '100%',
+                        position: 'absolute',
+                        left: '0',
+                        top: '13px',
                       },
                     }}
                   >
-                    <Box display="flex" alignItems="center">
-                      <GoogleIcon
-                        sx={{
-                          color: (theme) => theme.palette.error.main,
-                        }}
-                      />
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          ml: 1,
-                          color: (theme) =>
-                            `${
-                              theme.palette.mode === 'dark' ? theme.palette.grey.A200 : '#13152a'
-                            }`,
-                        }}
-                      >
-                        Google
-                      </Typography>
-                    </Box>
-                  </Button>
-                </Box>
+                    <Typography
+                      component="span"
+                      color="textSecondary"
+                      variant="h6"
+                      fontWeight="400"
+                      sx={{
+                        position: 'relative',
+                        padding: '0 12px',
+                        background: (theme) =>
+                          `${theme.palette.mode === 'dark' ? '#282c34' : '#fff'}`,
+                      }}
+                    >
+                      or sign in with
+                    </Typography>
+                  </Box>
 
-              </Box>
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      display="flex"
+                      alignitems="center"
+                      justifycontent="center"
+                      sx={{
+                        width: '100%',
+                        borderColor: (theme) =>
+                          `${theme.palette.mode === 'dark' ? '#42464d' : '#dde3e8'}`,
+                        borderWidth: '2px',
+                        textAlign: 'center',
+                        mt: 2,
+                        pt: '10px',
+                        pb: '10px',
+                        '&:hover': {
+                          borderColor: (theme) =>
+                            `${theme.palette.mode === 'dark' ? '#42464d' : '#dde3e8'}`,
+                          borderWidth: '2px',
+                        },
+                      }}
+                    >
+                      <Box display="flex" alignItems="center">
+                        <GoogleIcon
+                          sx={{
+                            color: (theme) => theme.palette.error.main,
+                          }}
+                        />
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            ml: 1,
+                            color: (theme) =>
+                              `${
+                                theme.palette.mode === 'dark' ? theme.palette.grey.A200 : '#13152a'
+                              }`,
+                          }}
+                        >
+                          Google
+                        </Typography>
+                      </Box>
+                    </Button>
+                  </Box>
+                  
+                </Box>
+              </form>
+              
             </Box>
           </Grid>
         </Grid>
