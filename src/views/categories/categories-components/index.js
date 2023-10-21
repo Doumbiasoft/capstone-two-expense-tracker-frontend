@@ -1,4 +1,4 @@
-import CategoryList from "./categoryList";
+import CategoryList from "./CategoryList";
 import BoxShapeIcon from "./BoxShapeIcon";
 import FormCategory from "./FormCategory";
 
