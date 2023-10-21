@@ -20,7 +20,7 @@ export default function RecentTransactions({data}) {
 
   return (
 <DashboardCard
-    title="Recent Transactions"
+    title="Last 5 Recent Transactions"
     subtitle=""
     customdisplay="block"
     custommargin="10px"

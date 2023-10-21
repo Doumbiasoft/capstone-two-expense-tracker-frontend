@@ -75,7 +75,7 @@ export default function  LineChartExpenseVsIncome({splineChartData}) {
     },
   ];
   return (
-    <DashboardCard title="Income vs Expense">
+    <DashboardCard title="Last 7 days (Income vs Expense)">
       {/* chart */}
       <Box>
         <Chart options={options} series={series} type="line" height="245" />

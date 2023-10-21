@@ -63,7 +63,7 @@ const DoughnutChartExpenseByCategory = ({doughnutChartData}) => {
   };
   const series = seriesChart;
   return (
-    <DashboardCard title="Expense By Category" >
+    <DashboardCard title="Last 7 days (Expense By Category)" >
 
       <Box
         sx={{
