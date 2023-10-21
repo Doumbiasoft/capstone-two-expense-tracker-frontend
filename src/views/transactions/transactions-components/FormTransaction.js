@@ -120,7 +120,7 @@ useEffect(() => {
             name="categoryId"
           >
             <MenuItem value={0}>-- --</MenuItem>
-            {ctx.user.categories.map((item)=>(
+            {ctx.user.categories.sort((a, b) => (a.name < b.name ? -1 : 1)).map((item)=>(
               <MenuItem key={item.id} value={item.id}>{`${item.name} - << ${item.type} >>`}</MenuItem>
             ))}
           </CustomSelect>
