@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Chart from 'react-apexcharts';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 
@@ -63,8 +63,16 @@ const DoughnutChartExpenseByCategory = ({doughnutChartData}) => {
   };
   const series = seriesChart;
   return (
-    <DashboardCard title="Last 7 days (Expense By Category)" >
-
+    <DashboardCard title="Expense By Category">
+ <Typography
+          color="textSecondary"
+          variant="body1"
+          sx={{
+            fontSize: 'h5.fontSize',
+          }}
+        >
+          Last 7 days
+        </Typography>
       <Box
         sx={{
           mt: 5,

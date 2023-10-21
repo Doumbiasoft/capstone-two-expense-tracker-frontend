@@ -48,13 +48,13 @@ useEffect(() => {
     {/* ------------------------- row 1 ------------------------- */}
 
     <Grid item xs={12} sm={6} lg={4}>
-      <AmountTile title='Total Income' amount={dashboard.totalIncomeAll?dashboard.totalIncomeAll:0} fabColor='success' titleColor='#00C292' />
+      <AmountTile title='Total Income' amount={dashboard.totalIncomeMonthly?dashboard.totalIncomeMonthly:0} fabColor='success' titleColor='#00C292' />
     </Grid>
     <Grid item xs={12} sm={6} lg={4}>
-    <AmountTile title='Total Expense' amount={dashboard.totalExpenseAll?dashboard.totalExpenseAll:0} fabColor='danger' titleColor='#E46A76'/>
+    <AmountTile title='Total Expense' amount={dashboard.totalExpenseMonthly?dashboard.totalExpenseMonthly:0} fabColor='danger' titleColor='#E46A76'/>
     </Grid>
     <Grid item xs={12} sm={12} lg={4}>
-    <AmountTile title='Total Balance' amount={dashboard.balanceAll?dashboard.balanceAll:0} fabColor='primary' titleColor='#364AAE'/>
+    <AmountTile title='Total Balance' amount={dashboard.balanceMonthly?dashboard.balanceMonthly:0} fabColor='primary' titleColor='#364AAE'/>
     </Grid>
     <Grid item xs={12} lg={8}>
       <LineChartExpenseVsIncome splineChartData={dashboard.splineChartData?dashboard.splineChartData:[]} />

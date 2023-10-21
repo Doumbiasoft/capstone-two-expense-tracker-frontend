@@ -11,8 +11,6 @@ import {
 } from '@mui/material';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 import cultureInfo from '../../../helpers/cultureInfo';
-import displayDateFormat from '../../../helpers/displayDateFormat';
-//const data =[{id:"1",category:"Salary",date:"14 Dec 2019",type:"Income",amount:"21000"},{id:"2",category:"Transportation",date:"04 Dec 2019",type:"Expense",amount:"500"}]
 
 
 export default function RecentTransactions({data}) {
@@ -20,11 +18,22 @@ export default function RecentTransactions({data}) {
 
   return (
 <DashboardCard
-    title="Last 5 Recent Transactions"
+    title="Recent Transactions"
     subtitle=""
     customdisplay="block"
     custommargin="10px"
   >
+     <Typography
+          color="textSecondary"
+          variant="body1"
+          sx={{
+            fontSize: 'h5.fontSize',
+            mb:5,
+            mt:-3
+          }}
+        >
+          Last 5
+        </Typography>
     <Box
       sx={{
         overflow: 'auto',

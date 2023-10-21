@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box,Typography } from '@mui/material';
 import Chart from 'react-apexcharts';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 
@@ -75,8 +75,17 @@ export default function  LineChartExpenseVsIncome({splineChartData}) {
     },
   ];
   return (
-    <DashboardCard title="Last 7 days (Income vs Expense)">
+    <DashboardCard title="Income vs Expense">
       {/* chart */}
+      <Typography
+          color="textSecondary"
+          variant="body1"
+          sx={{
+            fontSize: 'h5.fontSize',
+          }}
+        >
+          Last 7 days
+        </Typography>
       <Box>
         <Chart options={options} series={series} type="line" height="245" />
       </Box>

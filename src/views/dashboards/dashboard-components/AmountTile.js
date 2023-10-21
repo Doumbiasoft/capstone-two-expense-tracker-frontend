@@ -50,7 +50,18 @@ export default function AmountTile({title, amount, fabColor="secondary", titleCo
       >
         {cultureInfo.format(amount)}
       </Typography>
-     
+      <Typography
+        variant="h6"
+        fontWeight="400"
+        color="textSecondary"
+        sx={{
+          marginBottom: '0',
+          opacity: '0.6',
+        }}
+        gutterBottom
+      >
+        {`Monthly ${title.split(' ')[1]}`}
+      </Typography>
     </CardContent>
   </Card>
   )
