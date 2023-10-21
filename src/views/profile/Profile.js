@@ -1,7 +1,6 @@
 import React,{useContext, useState, useEffect, useRef} from 'react';
 import { Card, Grid, Typography, Button,Box,Fab,CardContent } from '@mui/material';
 
-
 import PageContainer from '../../components/container/PageContainer';
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 
@@ -28,13 +27,14 @@ const BCrumb = [
 
 export default function Profile() {
   const ctx = useContext(CurrentUserContext);
-
     const shortName = nameAcronym(ctx);
  
     const [message, setMessage] = useState("");
     const [formData, setFormData, handleChangeFormData] = useFormData(ctx.user);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const divMessage = useRef("");
+
+    const [passwordUser, setPasswordUser] = useState("");
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,7 +66,7 @@ export default function Profile() {
                 lastName: formData.lastName,
                 email: formData.email,
               }
-              let user = await Api.updateUser(ctx.user.id, userToUpdate);
+              let user = await Api.updateUser(ctx.userId, userToUpdate);
               if(user !== undefined && user !== "" && user !== null) {
                 ctx.actions.handleUser(user);
                 setMessage("User updated successfully!");
@@ -89,42 +89,118 @@ export default function Profile() {
       useEffect(() => {
         setFormData(ctx.user);
     },[ctx.user]);
-  
+
+
 const handleDeleteAccount = async ()=>{
   const { value: email } = await Swal.fire({
     title: 'Delete Account',
+    background:'#2F2F2F',
+    focusConfirm: false,
     input: 'email',
-    inputLabel: 'Enter your email address',
+    inputLabel: 'Deleting your account, will remove all your data',
+    inputLabelColor: '#903535',
     inputPlaceholder: 'Enter your email address',
     showCancelButton: true,
     confirmButtonColor: '#903535',
     cancelButtonColor: '#5F5E5E',
-    confirmButtonText: 'Delete'
+    confirmButtonText: 'Delete',
+    inputValidator: (value) => {
+      if (value.trim() !== ctx.user.email.trim()) {
+        return 'This email address is not related to this account. Please'
+      }
+    }
   })
-  
   if (email) {
+       const res = await Api.deleteUser(ctx.user.id);
+        if(res !== undefined && res !== "" && res !== null) {
+          ctx.actions.handleToken("");
+          ctx.actions.handleUser(null);
+        }
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Your Account has been deleted!',
+      title: 'Your account has been deleted!',
       showConfirmButton: false,
       timer: 1500
     })
   }
 }
 
+
+
+const handleEditPassword = async ()=>{
+ await Swal.fire({
+    title: 'Edit Password',
+    inputPlaceholder: 'Enter your new password',
+    background:'#2F2F2F',
+    showCancelButton: true,
+    confirmButtonColor: '#00C292',
+    cancelButtonColor: '#5F5E5E',
+    confirmButtonText: 'Change',
+    inputAttributes: {
+      autocapitalize: 'off',
+      autocorrect: 'off'
+    },
+    html:
+      '<input type="password" id="password" class="swal2-input" placeholder="New password">' +
+      '<input type="password" id="passwordConfirm" class="swal2-input" placeholder="Confirm New password">',
+    focusConfirm: false,
+    preConfirm: () => {
+      const password = Swal.getPopup().querySelector('#password').value
+      const passwordConfirm = Swal.getPopup().querySelector('#passwordConfirm').value
+      if (password !== passwordConfirm) {
+        Swal.showValidationMessage(`The passwords provided are identical`)
+      }
+      if (!password || !passwordConfirm) {
+        Swal.showValidationMessage(`Please enter a password and confirm it`)
+      }
+      return { password: password, passwordConfirm: passwordConfirm }
+    }
+  }).then((result) => {
+    const { passwordConfirm } = result.value;
+    setPasswordUser(passwordConfirm);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Your Password has been changed!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    
+  })
+}
+useEffect(() => {
+  async function updatePassword() {
+    try {
+      if (passwordUser) {
+        const passwordToUpdate = {
+          password: passwordUser
+        }
+        let user = await Api.updateUser(ctx.user.id, passwordToUpdate);
+        if(user !== undefined && user !== "" && user !== null) {
+          setMessage("User updated successfully!");
+        }
+      }
+    } catch (error) {
+        setMessage(error);
+    }
+  };
+  updatePassword();
+  
+}, [passwordUser]);
+
   return (
   <PageContainer title="Profile" description="user profile and setting">
   <Breadcrumb title="Profile & Settings" items={BCrumb} />
   <Grid container spacing={0}>
-    <Grid item lg={4} xs={12}>
+    <Grid item lg={4} xs={12} >
     <DashboardCard>
       <Box
           sx={{
-            mt: 5,
+            mt: 0,
             position: 'relative',
             width: '100%',
-            minHeight:'290px',
+            minHeight:'340px',
         }} 
           display='flex' 
           alignContent='stretch' 
@@ -147,10 +223,10 @@ const handleDeleteAccount = async ()=>{
          {ctx.user.firstName?(ctx.user.firstName + ' ' + ctx.user.lastName):''}
         </Typography>
         <Typography variant="body2">{ctx.user.email?ctx.user.email:''}</Typography>
-        <Button color="error" variant="contained" sx={{ mt: 7, mb:0 }} onClick={handleDeleteAccount}>
+        <Button color="error" variant="contained" sx={{ mt: 10, mb:0 }} onClick={handleDeleteAccount}>
           Delete Account
         </Button>
-        <Button color="primary" variant="contained" sx={{ mt: 7, mb:0, ml:1 }} onClick={()=>{}}>
+        <Button color="primary" variant="contained" sx={{ mt: 10, mb:0, ml:1 }} onClick={handleEditPassword}>
          <span style={{color:'white'}}>Change Password</span>
         </Button>
        </Box>
@@ -208,10 +284,10 @@ const handleDeleteAccount = async ()=>{
           <Box display="flex" alignItems="center" sx={{height:'30px',mb:3}}>
                 {isSubmitted?<Spinner />:<></>}
           </Box>
-          <Button type='submit' color="success" variant="contained" sx={{ mt: 2 }}>
+          <Button type='submit' color="success" variant="contained" sx={{ mt: 1,mb:1 }}>
             Update
           </Button>
-          <div style={{color:'red',textAlign:'center',height:'10px'}} ref={divMessage}></div>
+          <div style={{color:'red',textAlign:'center',height:'10px',marginBottom:8}} ref={divMessage}></div>
         </form>
       </Box>
       </CardContent>

@@ -26,7 +26,7 @@ import { useFormData } from'../../hooks/useFormData';
 
 
 export default function AddCategory() {
-  const [formData,setFormData, handleChangeFormData] =  useFormData({});
+  const [formData,setFormData, handleChangeFormData] =  useFormData({type:"", name:""});
   return (
     <PageContainer title="Create a Category" description="this is a form to add a category" >
     {/* breadcrumb */}
@@ -34,10 +34,10 @@ export default function AddCategory() {
     <Grid container spacing={0}>
       {/* ------------------------- row 1 ------------------------- */}
     <Grid item xs={12} lg={8}>
-       <FormCategory id={0} dataForm={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
+       <FormCategory id={0} formData={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
     </Grid>
       <Grid item xs={12} lg={4}  >
-       <BoxShapeIcon minHeight='170px' count={''} hasCount={false} iconComponent={<FcPlus size={100}/>}/>
+       <BoxShapeIcon minHeight='210px' count={''} hasCount={false} iconComponent={<FcPlus size={100}/>}/>
       </Grid>
     </Grid>
   </PageContainer>

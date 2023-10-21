@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
@@ -23,10 +23,9 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-
 
 function TablePaginationActions(props) {
+
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -84,7 +83,8 @@ TablePaginationActions.propTypes = {
 };
 
 
-const CategoryList = ({data}) => {
+const CategoryList = ({data,onDelete}) => {
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [dense, setDense] = React.useState(true);
@@ -103,27 +103,7 @@ const CategoryList = ({data}) => {
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-  const handleDeleteItem = async (id)=>{
-    Swal.fire({
-      title: `Delete id: ${id} ?`,
-      text: "You won't be able to revert this. All transactions related to this category will be deleted too!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#903535',
-      cancelButtonColor: '#5F5E5E',
-      confirmButtonText: 'Delete'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'The category has been deleted!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
-  }
+  
 
   return (
   
@@ -160,7 +140,7 @@ const CategoryList = ({data}) => {
               },
             }}
           >
-            <Table
+                 <Table
               aria-label="list of items"
               sx={{
                 whiteSpace: 'nowrap',
@@ -221,7 +201,7 @@ const CategoryList = ({data}) => {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton onClick={()=>{handleDeleteItem(row.id)}}>
+                            <IconButton onClick={()=>{onDelete(row)}}>
                             <FeatherIcon icon="trash" width="20" color="red" />
                             </IconButton>
                         </Tooltip>
@@ -258,6 +238,8 @@ const CategoryList = ({data}) => {
                 </TableRow>
               </TableFooter>
             </Table>
+            
+         
           </Box>
         </CardContent>
       </Card>

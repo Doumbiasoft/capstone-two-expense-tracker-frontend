@@ -3,7 +3,14 @@ import { Box } from '@mui/material';
 import Chart from 'react-apexcharts';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 
-export default function  LineChartExpenseVsIncome() {
+export default function  LineChartExpenseVsIncome({splineChartData}) {
+
+
+  const categories = splineChartData.map(data => data.day);
+  const incomeData = splineChartData.map(data => data.income);
+  const expenseData = splineChartData.map(data => data.expense);
+
+
   const primary = "#7CCF71";
   const secondary =  "#E7D91B";
   const options = {
@@ -40,7 +47,7 @@ export default function  LineChartExpenseVsIncome() {
     colors: [primary, secondary],
 
     xaxis: {
-      categories: ['16/08', '17/08', '18/08', '19/08', '20/08', '21/08', '22/08', '23/08'],
+      categories: categories,
     },
     markers: {
       size: 4,
@@ -51,6 +58,7 @@ export default function  LineChartExpenseVsIncome() {
         format: 'dd/MM/yy HH:mm',
       },
       theme: 'dark',
+      
     },
     legend: {
       show: true,
@@ -59,11 +67,11 @@ export default function  LineChartExpenseVsIncome() {
   const series = [
     {
       name: 'Income',
-      data: [0, 5, 6, 8, 25, 9, 11, 24],
+      data: incomeData,
     },
     {
       name: 'Expense',
-      data: [0, 3, 1, 2, 8, 1, 5, 1],
+      data: expenseData,
     },
   ];
   return (

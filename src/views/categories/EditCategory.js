@@ -41,10 +41,10 @@ export default function EditCategory() {
     <Grid container spacing={0}>
       {/* ------------------------- row 1 ------------------------- */}
     <Grid item xs={12} lg={8}>
-       <FormCategory id={from.id} dataForm={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
+       <FormCategory id={from.id} formData={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
     </Grid>
       <Grid item xs={12} lg={4}  >
-       <BoxShapeIcon minHeight='170px' count={''} hasCount={false} iconComponent={<AiFillEdit  size={100}/>}/>
+       <BoxShapeIcon minHeight='210px' count={''} hasCount={false} iconComponent={<AiFillEdit  size={100}/>}/>
       </Grid>
     </Grid>
   </PageContainer>

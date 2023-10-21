@@ -26,7 +26,14 @@ import { useFormData } from'../../hooks/useFormData';
 
 
 export default function AddTransaction() {
-  const [formData, setFormData, handleChangeFormData] =  useFormData({});
+  const transaction = {
+    userId: 0,
+    categoryId:0,
+    date: "",
+    amount: 0,
+    note: "",
+  }
+  const [formData, setFormData, handleChangeFormData] =  useFormData(transaction);
   return (
     <PageContainer title="Create a Transaction" description="this is a form to add a transaction" >
     {/* breadcrumb */}
@@ -34,10 +41,10 @@ export default function AddTransaction() {
     <Grid container spacing={0}>
       {/* ------------------------- row 1 ------------------------- */}
     <Grid item xs={12} lg={8}>
-       <FormTransaction id={0} dataForm={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
+       <FormTransaction id={0} formData={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
     </Grid>
       <Grid item xs={12} lg={4}  >
-       <BoxShapeIcon minHeight='385px' count={''} hasCount={false} iconComponent={<FcPlus size={100}/>}/>
+       <BoxShapeIcon minHeight='440px' count={''} hasCount={false} iconComponent={<FcPlus size={100}/>}/>
       </Grid>
     </Grid>
   </PageContainer>

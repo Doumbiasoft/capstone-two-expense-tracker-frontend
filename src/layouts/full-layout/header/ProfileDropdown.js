@@ -108,9 +108,22 @@ export default function ProfileDropdown({setAnchorEl4}) {
             >
               Profile
             </Typography>
-            <Typography color="textSecondary" variant="h6" fontWeight="400">
-              Account Settings
+            <Box display="flex" alignItems="center">
+            <Typography
+              color="textSecondary"
+              display="flex"
+              alignItems="center"
+              sx={{
+                color: (theme) => theme.palette.grey.A200,
+                mr: 1,
+              }}
+            >
+              <FeatherIcon icon="user" width="18" />
             </Typography>
+            <Typography color="textSecondary" variant="h6">
+            Account Settings
+            </Typography>
+          </Box>
           </Box>
         </Box>
       </MenuItem>

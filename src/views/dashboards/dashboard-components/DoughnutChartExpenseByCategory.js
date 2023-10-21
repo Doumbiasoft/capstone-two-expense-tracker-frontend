@@ -4,15 +4,18 @@ import { Box } from '@mui/material';
 import Chart from 'react-apexcharts';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 
-const DoughnutChartExpenseByCategory = () => {
+const DoughnutChartExpenseByCategory = ({doughnutChartData}) => {
+
+  const labels = doughnutChartData.map(data => data.categoryName+ " $ ");
+  const seriesChart = doughnutChartData.map(data => data.amount);
 
   const COLORS = ['#00C49F','#364AAE','#F2BE4E','#EF9264','#4E5AA0','#97BD3F','#A8108F', '#0088FE', '#CD8DF5'];
 
-  const optionstotalsales = {
-    labels: ['2021', '2020', '2019','2018','2017'],
+  const options = {
+    labels: labels,
 
     chart: {
-      height: 215,
+      height: 220,
       type: 'donut',
       foreColor: '#adb0bb',
       fontFamily: 'DM sans',
@@ -30,7 +33,7 @@ const DoughnutChartExpenseByCategory = () => {
     plotOptions: {
       pie: {
         donut: {
-          size: '40%',
+          size: '50%',
           background: 'transparent',
           labels: {
             show: true,
@@ -58,7 +61,7 @@ const DoughnutChartExpenseByCategory = () => {
       fillSeriesColor: true,
     },
   };
-  const seriestotalsales = [12000, 2000, 100,50, 400];
+  const series = seriesChart;
   return (
     <DashboardCard title="Expense By Category" >
 
@@ -66,9 +69,10 @@ const DoughnutChartExpenseByCategory = () => {
         sx={{
           mt: 5,
           position: 'relative',
+          height: 220,
         }}
       >
-        <Chart options={optionstotalsales} series={seriestotalsales} type="donut" height="215" />
+        <Chart options={options} series={series} type="donut" width="350" />
  
       </Box>
       

@@ -25,7 +25,6 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import cultureInfo from '../../../helpers/cultureInfo';
 import displayDateFormat from '../../../helpers/displayDateFormat';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -85,7 +84,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-const TransactionList = ({data}) => {
+const TransactionList = ({data, onDelete}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [dense, setDense] = React.useState(true);
@@ -105,27 +104,6 @@ const TransactionList = ({data}) => {
     setDense(event.target.checked);
   };
 
-  const handleDeleteItem = async (id)=>{
-    Swal.fire({
-      title: `Delete id: ${id} ?`,
-      text: "You won't be able to revert this. All transactions related to this category will be deleted too!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#903535',
-      cancelButtonColor: '#5F5E5E',
-      confirmButtonText: 'Delete'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'The category has been deleted!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
-  }
 
   return (
   
@@ -199,24 +177,24 @@ const TransactionList = ({data}) => {
                 ).map((row) => (
                   <TableRow key={row.id}>
                     <TableCell>
-                      <Typography variant="h5">{row.category}</Typography>
+                      <Typography variant="h5">{row.categoryName}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="h5">{displayDateFormat(row.date)}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h5">{row.type === 'Expense'?'- ':"+ "}{cultureInfo.format(row.amount)}</Typography>
+                      <Typography variant="h5" ><span style={{color:row.categoryType === "Expense"?"red":"green"}}>{row.categoryType === 'Expense'?'- ':"+ "}</span>{cultureInfo.format(row.amount)}</Typography>
                     </TableCell>
                     <TableCell>
                       <Chip
                         sx={{
                           backgroundColor:
-                            row.type === 'Expense'
+                            row.categoryType === 'Expense'
                               ? ''
                               : '',
                           
                           color:
-                            row.type === 'Expense'
+                            row.categoryType === 'Expense'
                               ? (theme) => theme.palette.danger.main
                               : (theme) => theme.palette.success.main,
                               
@@ -225,7 +203,7 @@ const TransactionList = ({data}) => {
                           pr: '3px',
                         }}
                         size="small"
-                        label={row.type}
+                        label={row.categoryType}
                       />
                     </TableCell>
                     <TableCell>
@@ -236,7 +214,7 @@ const TransactionList = ({data}) => {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton onClick={()=>{handleDeleteItem(row.id)}}>
+                            <IconButton onClick={()=>{onDelete(row)}}>
                             <FeatherIcon icon="trash" width="20" color="red" />
                             </IconButton>
                         </Tooltip>

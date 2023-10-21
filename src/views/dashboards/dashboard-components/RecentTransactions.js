@@ -11,13 +11,15 @@ import {
 } from '@mui/material';
 import DashboardCard from '../../../components/base-card/DashboardCard';
 import cultureInfo from '../../../helpers/cultureInfo';
+import displayDateFormat from '../../../helpers/displayDateFormat';
+//const data =[{id:"1",category:"Salary",date:"14 Dec 2019",type:"Income",amount:"21000"},{id:"2",category:"Transportation",date:"04 Dec 2019",type:"Expense",amount:"500"}]
 
-const data =[{id:"1",category:"Salary",date:"14 Dec 2019",type:"Income",amount:"21000"},{id:"2",category:"Transportation",date:"04 Dec 2019",type:"Expense",amount:"500"}]
+
+export default function RecentTransactions({data}) {
 
 
-export default function RecentTransactions() {
   return (
-    <DashboardCard
+<DashboardCard
     title="Recent Transactions"
     subtitle=""
     customdisplay="block"
@@ -67,21 +69,21 @@ export default function RecentTransactions() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((val) => (
-            <TableRow key={val.id}>
+          {data.map((row) => (
+            <TableRow key={row.id}>
                <TableCell>
                 <Typography color="textSecondary" variant="h6">
-                  {val.category}
+                  {row.categoryName}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography color="textSecondary" variant="h6">
-                  {val.date}
+                  {row.date}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography color="textSecondary" variant="h6">
-                 {val.type === 'Expense'?'- ':'+ '} {cultureInfo.format(val.amount)}
+                  <span style={{color:row.categoryType === "Expense"?"red":"green"}}>{row.categoryType === 'Expense'?'- ':"+ "}</span>{cultureInfo.format(row.amount)}
                 </Typography>
               </TableCell>
               <TableCell>
@@ -89,7 +91,7 @@ export default function RecentTransactions() {
                 <Chip
                   sx={{
                     backgroundColor:
-                    val.type === 'Expense'
+                    row.categoryType === 'Expense'
                         ? (theme) => theme.palette.warning.main
                         : (theme) => theme.palette.success.main,
                     color: '#fff',
@@ -97,7 +99,7 @@ export default function RecentTransactions() {
                 
                   }}
                   size="small"
-                  label={val.type}
+                  label={row.categoryType}
                 />
                 </Box>
               </TableCell>

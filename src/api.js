@@ -68,42 +68,74 @@ class Api {
         let res = await this.request(`users/${id}`,data,"PATCH");
       return res.user;
     }
+  /** delete a user. */
 
-
-
-
-  /** Get details on a company by handle. */
-
-  static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
-    return res.company;
+  static async deleteUser(id) {
+    let res = await this.request(`users/${id}`,{},"DELETE");
+  return res.deleted;
   }
-  /** Get all companies. */
 
-  static async getCompanies(name) {
-    const path = name !=="" ?`companies?name=${name}`:"companies";
-    let res = await this.request(path);
-    return res.companies;
+
+
+  /** Get categories by userId. */
+
+  static async getCategories(userId) {
+    let res = await this.request(`categories/users/${userId}`);
+    return res.categories;
   }
-   /** Get all jobs. */
 
-   static async getJobs(title) {
-    const path = title !=="" ?`jobs?title=${title}`:"jobs";
-    let res = await this.request(path);
-    return res.jobs;
+    /** Add a category. */
+
+    static async addCategory(data) {
+      let res = await this.request(`categories`,data,"POST");
+      return res.category;
+    }
+   /** Update a category. */
+
+  static async updateCategory(id, data) {
+    let res = await this.request(`categories/${id}`,data,"PATCH");
+    return res.category;
   }
-     /** Apply for a job. */
 
-     static async applyToJob(username, jobId) {
-      const path = `users/${username}/jobs/${jobId}`;
-      let res = await this.request(path,{},"POST");
-      return res.applied;
+    /** delete a category. */
+
+    static async deleteCategory(id) {
+      let res = await this.request(`categories/${id}`,{},"DELETE");
+    return res.deleted;
     }
 
-   
+  /** Get categories by userId. */
 
+  static async getTransactions(userId) {
+    let res = await this.request(`transactions/users/${userId}`);
+    return res.transactions;
+  }
 
-  // obviously, you'll add a lot here ...
+    /** Add a category. */
+
+  static async addTransaction(data) {
+    let res = await this.request(`transactions`,data,"POST");
+    return res.transaction;
+  }
+
+     /** Update a category. */
+
+   static async updateTransaction(id, data) {
+      let res = await this.request(`transactions/${id}`,data,"PATCH");
+      return res.transaction;
+    }
+  
+
+  static async deleteTransaction(id) {
+    let res = await this.request(`transactions/${id}`,{},"DELETE");
+  return res.deleted;
+  }
+
+  static async getDashboard(userId) {
+    let res = await this.request(`users/${userId}/dashboard`);
+    return res.dashboard;
+  }
+
 }
 
 

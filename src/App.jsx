@@ -17,6 +17,7 @@ function App() {
   const customizer = useSelector((state) => state.CustomizerReducer);
 
   const [user, setUser] = useState(null);
+  const [userId, seUserId] = useState(0);
   const [token, setToken] = useLocalStorage("token","");
 
   const handleUser = (data) =>{
@@ -42,6 +43,7 @@ function App() {
         if (user === null) {
           if (token){
             const tokenInfo = Api.decodeToken(token);
+            seUserId(tokenInfo.id);
             if(tokenInfo){
                 const currentUser = await Api.getUser(tokenInfo.id);
                 if(currentUser){
@@ -60,7 +62,8 @@ function App() {
    }, [user, token]);
 
 
-  const ctx = { 
+  const ctx = {
+    userId:userId,
     user:{...user}, 
     token:token, 
     actions:{ 

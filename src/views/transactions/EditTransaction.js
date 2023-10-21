@@ -41,10 +41,10 @@ export default function EditTransaction() {
     <Grid container spacing={0}>
       {/* ------------------------- row 1 ------------------------- */}
     <Grid item xs={12} lg={8}>
-       <FormTransaction id={from.id} dataForm={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
+       <FormTransaction id={from.id} formData={formData} handleChangeFormData={handleChangeFormData} minHeight='220px'/>
     </Grid>
       <Grid item xs={12} lg={4}  >
-       <BoxShapeIcon minHeight='385px' count={''} hasCount={false} iconComponent={<AiFillEdit  size={100}/>}/>
+       <BoxShapeIcon minHeight='440px' count={''} hasCount={false} iconComponent={<AiFillEdit  size={100}/>}/>
       </Grid>
     </Grid>
   </PageContainer>
