@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { BuildTheme } from '../../../assets/global/Theme-variable';
 
 const ThemeSettings = () => {
-  const customizer = useSelector((state) => state.CustomizerReducer);
+  const custom = useSelector((state) => state.CustomizerReducer);
   const theme = BuildTheme({
-    direction: customizer.activeDir,
-    theme: customizer.activeTheme,
+    direction: custom.activeDir,
+    theme: custom.activeTheme,
   });
   useEffect(() => {
-    document.dir = customizer.activeDir;
-  }, [customizer]);
+    document.dir = custom.activeDir;
+  }, [custom]);
 
   return theme;
 };

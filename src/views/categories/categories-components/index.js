@@ -4,7 +4,7 @@ import FormCategory from "./FormCategory";
 
 
 
-export{
+export {
     CategoryList,
     BoxShapeIcon,
     FormCategory

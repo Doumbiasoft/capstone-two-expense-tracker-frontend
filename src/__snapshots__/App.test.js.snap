@@ -1,0 +1,215 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Snapshot Test > should matches snapshot Recent Transactions 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-qxkz57-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiCardHeader-root css-v8ux6d-MuiCardHeader-root"
+      subtitle=""
+    >
+      <div
+        class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+      >
+        <h3
+          class="MuiTypography-root MuiTypography-h3 css-vqiuom-MuiTypography-root"
+        >
+          Recent Transactions
+        </h3>
+      </div>
+    </div>
+    <div
+      class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-he9jqb-MuiTypography-root"
+      >
+        Last 5
+      </p>
+      <div
+        class="MuiBox-root css-1ap4dyu"
+      >
+        <table
+          aria-label="simple table"
+          class="MuiTable-root css-lmmtxd-MuiTable-root"
+        >
+          <thead
+            class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            >
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
+                >
+                  Category
+                </h5>
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
+                >
+                  Date
+                </h5>
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                scope="col"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
+                >
+                  Amount
+                </h5>
+              </th>
+              <th
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1azl6jz-MuiTableCell-root"
+                scope="col"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
+                >
+                  Type
+                </h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          />
+        </table>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Snapshot Test > should matches snapshot of AmountTile 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+  >
+    <div
+      class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+    >
+      <div
+        class="MuiBox-root css-1yp4ln"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1odcp3x-MuiTypography-root"
+        >
+          Total Income
+        </h4>
+        <div
+          class="MuiBox-root css-zdpt2t"
+        >
+          <button
+            aria-label="add"
+            class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeMedium MuiFab-function(...a) {
+    let r = v(t);
+    r.called = !0, r.callCount++, r.calls.push(a);
+    let i = r.next.shift();
+    if (i) {
+      r.results.push(i);
+      let [s, l] = i;
+      if (s === \\"ok\\")
+        return l;
+      throw l;
+    }
+    let o, c = \\"ok\\";
+    if (r.impl)
+      try {
+        new.target ? o = Reflect.construct(r.impl, a, new.target) : o = r.impl.apply(this, a), c = \\"ok\\";
+      } catch (s) {
+        throw o = s, c = \\"error\\", r.results.push([c, s]), s;
+      }
+    let x = [c, o];
+    if (b(o)) {
+      let s = o.then((l) => x[1] = l).catch((l) => {
+        throw x[0] = \\"error\\", x[1] = l, l;
+      });
+      Object.assign(s, o), o = s;
+    }
+    return r.results.push(x), o;
+  } MuiFab-root MuiFab-circular MuiFab-sizeMedium MuiFab-function(...a) {
+    let r = v(t);
+    r.called = !0, r.callCount++, r.calls.push(a);
+    let i = r.next.shift();
+    if (i) {
+      r.results.push(i);
+      let [s, l] = i;
+      if (s === \\"ok\\")
+        return l;
+      throw l;
+    }
+    let o, c = \\"ok\\";
+    if (r.impl)
+      try {
+        new.target ? o = Reflect.construct(r.impl, a, new.target) : o = r.impl.apply(this, a), c = \\"ok\\";
+      } catch (s) {
+        throw o = s, c = \\"error\\", r.results.push([c, s]), s;
+      }
+    let x = [c, o];
+    if (b(o)) {
+      let s = o.then((l) => x[1] = l).catch((l) => {
+        throw x[0] = \\"error\\", x[1] = l, l;
+      });
+      Object.assign(s, o), o = s;
+    }
+    return r.results.push(x), o;
+  } css-1ts8yrn-MuiButtonBase-root-MuiFab-root"
+            elevation="0"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              class="feather feather-dollar-sign "
+              fill="none"
+              height="30"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="30"
+            >
+              <g>
+                <line
+                  x1="12"
+                  x2="12"
+                  y1="1"
+                  y2="23"
+                />
+                <path
+                  d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                />
+              </g>
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+      <h1
+        class="MuiTypography-root MuiTypography-h1 MuiTypography-gutterBottom css-69kgue-MuiTypography-root"
+      >
+        $NaN
+      </h1>
+      <h6
+        class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom css-1c9hwm4-MuiTypography-root"
+      >
+        Monthly Income
+      </h6>
+    </div>
+  </div>
+</DocumentFragment>
+`;

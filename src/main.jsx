@@ -11,10 +11,10 @@ import Spinner from './views/spinner/Spinner';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={configureStore()}>
-  <Suspense fallback={<Spinner />}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Suspense>
-</Provider>
+    <Suspense fallback={<Spinner />}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Suspense>
+  </Provider>
 )
