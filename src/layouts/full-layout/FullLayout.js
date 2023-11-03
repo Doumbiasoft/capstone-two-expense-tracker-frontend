@@ -1,13 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { experimentalStyled, useMediaQuery, Container, Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Sidebar from './sidebar/Sidebar';
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import Customizer from './customizer/Customizer';
 import { TopbarHeight } from '../../assets/global/Theme-variable';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 const MainWrapper = experimentalStyled('div')(() => ({
   display: 'flex',
@@ -35,7 +33,6 @@ const FullLayout = () => {
   const customizer = useSelector((state) => state.CustomizerReducer);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
-  const ctx = useContext(CurrentUserContext);
 
 
   return (
@@ -68,7 +65,6 @@ const FullLayout = () => {
           <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
             <Outlet />
           </Box>
-          {/* <Customizer /> */}
           <Footer />
         </Container>
       </PageWrapper>

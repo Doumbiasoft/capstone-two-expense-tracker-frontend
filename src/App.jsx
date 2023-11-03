@@ -16,6 +16,7 @@ function App() {
   const theme = ThemeSettings();
   const customizer = useSelector((state) => state.CustomizerReducer);
 
+
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(0);
   const [token, setToken] = useLocalStorage("token", "");
@@ -74,14 +75,14 @@ function App() {
 
   };
   return (
-    <ThemeProvider theme={theme}>
-      <RTL direction={customizer.activeDir}>
-        <CssBaseline />
-        <CurrentUserContext.Provider value={ctx}>
+    <CurrentUserContext.Provider value={ctx}>
+      <ThemeProvider theme={theme}>
+        <RTL direction={customizer.activeDir}>
+          <CssBaseline />
           {<RouterManager />}
-        </CurrentUserContext.Provider>
-      </RTL>
-    </ThemeProvider>
+        </RTL>
+      </ThemeProvider>
+    </CurrentUserContext.Provider>
   );
 }
 

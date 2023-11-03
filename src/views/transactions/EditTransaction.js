@@ -32,7 +32,6 @@ export default function EditTransaction() {
     const location = useLocation()
     const { from } = location.state;
     const [formData,setFormData, handleChangeFormData] =  useFormData(from);
-   
 
   return (
     <PageContainer title="Edit a Transaction" description="this is a form to edit a transaction" >

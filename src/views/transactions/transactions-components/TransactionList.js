@@ -24,7 +24,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import cultureInfo from '../../../helpers/cultureInfo';
-import displayDateFormat from '../../../helpers/displayDateFormat';
+import moment from 'moment';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -180,7 +180,7 @@ const TransactionList = ({data, onDelete}) => {
                       <Typography variant="h5">{row.categoryName}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h5">{displayDateFormat(row.date)}</Typography>
+                      <Typography variant="h5">{moment.parseZone(row.date).format('MMM, Do YYYY')}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="h5" ><span style={{color:row.categoryType === "Expense"?"red":"green"}}>{row.categoryType === 'Expense'?'- ':"+ "}</span>{cultureInfo.format(row.amount)}</Typography>

@@ -6,12 +6,11 @@ import CustomTextField from '../../../components/forms/custom-elements/CustomTex
 import CustomFormLabel from '../../../components/forms/custom-elements/CustomFormLabel';
 import CustomSelect from '../../../components/forms/custom-elements/CustomSelect';
 
-
-import dateFormat from '../../../helpers/dateFormat';
-
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
 import Api from '../../../api';
 import Spinner from '../../../views/spinner/Spinner';
+
+import moment from 'moment';
 
 
 export default function FormTransaction({ minHeight = '520px', handleChangeFormData, formData, id }) {
@@ -22,13 +21,13 @@ export default function FormTransaction({ minHeight = '520px', handleChangeFormD
   const divMessage = useRef("");
   const navigateTo = useNavigate();
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!ctx.userId) {
       return;
     }
 
-    console.log(formData);
     if (formData.categoryId !== 0 && formData.amount !== 0 && formData.date !== "") {
       setMessage("");
       setIsSubmitted(true);
@@ -47,6 +46,8 @@ export default function FormTransaction({ minHeight = '520px', handleChangeFormD
   useEffect(() => {
     async function operationTransaction() {
       try {
+
+
         if (isSubmitted === true && formData) {
 
           let trans = {};
@@ -157,7 +158,7 @@ export default function FormTransaction({ minHeight = '520px', handleChangeFormD
               size="small"
               sx={{ mb: 2 }}
               name="date"
-              defaultValue={dateFormat(formData.date)}
+              defaultValue={ moment.parseZone(formData.date).format('YYYY-MM-DD')}
               onChange={(e) => handleChangeFormData(e)}
 
             />

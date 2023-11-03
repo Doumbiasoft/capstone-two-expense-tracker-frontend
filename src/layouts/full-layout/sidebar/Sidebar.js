@@ -135,7 +135,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                       component={NavLink}
                       to={item.href}
                       // selected={pathDirect === item.href}
-                      selected={(pathDirect === item.href) || pathDirect.includes(item.href)}//new line of code add by Momo
+                      selected={(pathDirect === item.href) || pathDirect.includes(item.href)}//select child element from parent
                       sx={{
                         mb: 1,
                         ...(pathDirect === item.href && {
