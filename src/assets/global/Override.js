@@ -16,17 +16,7 @@ const components = {
       '#root': {
         height: '100%',
       },
-      "*[dir='rtl'] .buyNowImg": {
-        transform: 'scaleX(-1)',
-      },
-
-      '.buyNowImg': {
-        position: 'absolute',
-        right: '-44px',
-        top: '-18px',
-        width: '143px',
-        height: '175px',
-      },
+      
       '.MuiCardHeader-action': {
         alignSelf: 'center !important',
       },
