@@ -16,19 +16,60 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Api from '../../api'
 import Spinner from '../../views/spinner/Spinner';
 
+import { useGoogleOauth } from '../../hooks/useGoogleOauth';
+
+
 export default function Login() {
   const ctx = useContext(CurrentUserContext);
+  const navigateTo = useNavigate();
+  const divMessage = useRef("");
 
   const INITIAL_STATE = {
     email: '',
     password: ''
   };
-
-  const navigateTo = useNavigate();
-  const [message, setMessage] = useState("");
   const [formData, setFormData, handleChangeFormData] = useFormData(INITIAL_STATE);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const divMessage = useRef("");
+  const [message, setMessage] = useState("");
+  const [userGoogle, handleGoogle] = useGoogleOauth(null);
+
+
+  useEffect(
+    () => {
+      async function OauthGoogle() {
+        try {
+          if (userGoogle) {
+            const user = {
+              firstName: userGoogle.given_name,
+              lastName: userGoogle.family_name,
+              email: userGoogle.email,
+              oauthId: userGoogle.id,
+              oauthProvider:'Google',
+              oauthPicture: userGoogle.picture
+            };
+
+            //console.log("Oauth Google:", user);
+
+            let _token = await Api.oAuth(user);
+            if (_token !== undefined && _token !== "") {
+              ctx.actions.handleToken(_token);
+              navigateTo("/");
+            }
+
+          }
+        } catch (error) {
+          ctx.actions.handleToken("");
+          setMessage(error);
+        }
+      };
+      OauthGoogle();
+    },
+    [ userGoogle ]
+);
+
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -258,7 +299,10 @@ export default function Login() {
                                 `${theme.palette.mode === 'dark' ? '#42464d' : '#dde3e8'}`,
                               borderWidth: '2px',
                             },
+                            
                           }}
+                          onClick={()=>handleGoogle()}
+                          
                         >
                           <Box display="flex" alignItems="center">
                             <GoogleIcon

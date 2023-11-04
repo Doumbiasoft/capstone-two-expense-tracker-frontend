@@ -1,5 +1,5 @@
 import React,{useContext, useState, useEffect, useRef} from 'react';
-import { Card, Grid, Typography, Button,Box,Fab,CardContent } from '@mui/material';
+import { Card, Grid, Typography, Button,Box,Fab,CardContent, Avatar } from '@mui/material';
 
 import PageContainer from '../../components/container/PageContainer';
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
@@ -207,18 +207,22 @@ useEffect(() => {
           alignItems='center' 
           justifyContent='center'>
           <Box sx={{width: '100%',}}>
-          <Fab
-            color="secondary"
-            aria-label="add"
-            elevation="0"
-            sx={{
-              boxShadow: 'none',
-              width: 110,
-             height: 110,
-            }}
-          >
-            <span style={{fontWeight:'bold',fontSize:30}}>{shortName}</span>
-          </Fab>
+            {ctx.user.isOauth? 
+             <Avatar alt={shortName} src={ctx.user.oauthPicture} sx={{ width: 110, height: 110 }} />:
+             <Fab
+              color="secondary"
+              aria-label="add"
+              elevation="0"
+              sx={{
+                boxShadow: 'none',
+                width: 110,
+               height: 110,
+              }}
+            >
+              <span style={{fontWeight:'bold',fontSize:30}}>{shortName}</span>
+            </Fab>
+            }
+         
           <Typography variant="h2" sx={{ mt: 1 }}>
          {ctx.user.firstName?(ctx.user.firstName + ' ' + ctx.user.lastName):''}
         </Typography>
@@ -226,9 +230,10 @@ useEffect(() => {
         <Button color="error" variant="contained" sx={{ mt: 10, mb:0 }} onClick={handleDeleteAccount}>
           Delete Account
         </Button>
-        <Button color="primary" variant="contained" sx={{ mt: 10, mb:0, ml:1 }} onClick={handleEditPassword}>
-         <span style={{color:'white'}}>Change Password</span>
-        </Button>
+        <Button color="primary" variant="contained" sx={{ mt: 10, mb:0, ml:1 }} onClick={handleEditPassword}  disabled={ctx.user.isOauth?true:false}>
+        <span style={{color:'white'}}>Change Password</span>
+       </Button>
+        
        </Box>
       </Box>
     </DashboardCard>
@@ -256,6 +261,7 @@ useEffect(() => {
             name="firstName"
             value={formData.firstName}
             onChange={handleChangeFormData}
+            disabled={ctx.user.isOauth?true:false}
           />
            <CustomFormLabel htmlFor="lastName">Last Name</CustomFormLabel>
           <CustomTextField
@@ -267,6 +273,7 @@ useEffect(() => {
             name="lastName"
             value={formData.lastName}
             onChange={handleChangeFormData}
+            disabled={ctx.user.isOauth?true:false}
           />
 
           <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
@@ -284,7 +291,7 @@ useEffect(() => {
           <Box display="flex" alignItems="center" sx={{height:'30px',mb:3}}>
                 {isSubmitted?<Spinner />:<></>}
           </Box>
-          <Button type='submit' color="success" variant="contained" sx={{ mt: 1,mb:1 }}>
+          <Button type='submit' color="success" variant="contained" sx={{ mt: 1,mb:1 }} disabled={ctx.user.isOauth?true:false}>
             Update
           </Button>
           <div style={{color:'red',textAlign:'center',height:'10px',marginBottom:8}} ref={divMessage}></div>

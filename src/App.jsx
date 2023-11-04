@@ -11,6 +11,8 @@ import Api from './api';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import CurrentUserContext from './contexts/CurrentUserContext';
 import './App.scss';
+import { GoogleOAuthProvider} from '@react-oauth/google';
+
 
 function App() {
   const theme = ThemeSettings();
@@ -75,6 +77,7 @@ function App() {
 
   };
   return (
+    <GoogleOAuthProvider clientId="1038492502004-6hvqmj0r7rqr8slpvo4nkhjvfavcubqa.apps.googleusercontent.com">
     <CurrentUserContext.Provider value={ctx}>
       <ThemeProvider theme={theme}>
         <RTL direction={customizer.activeDir}>
@@ -83,6 +86,7 @@ function App() {
         </RTL>
       </ThemeProvider>
     </CurrentUserContext.Provider>
+    </GoogleOAuthProvider>
   );
 }
 

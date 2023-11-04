@@ -49,6 +49,12 @@ class Api {
       let res = await this.request("auth/register",user, "POST");
      return res.token;
     }
+      /** google authentication. */
+      static async oAuth(user) {
+        let res = await this.request("auth/oauth",user, "POST");
+       return res.token;
+      }
+
     
     static decodeToken(token) {
       let user = jwtDecode(token);

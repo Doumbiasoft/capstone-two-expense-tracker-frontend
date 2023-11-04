@@ -7,7 +7,7 @@ import {
   Toolbar,
   Menu,
   Typography,
-  Button,Fab
+  Button,Fab, Avatar
 } from '@mui/material';
 import PropTypes from 'prop-types';
 // Dropdown Component
@@ -94,23 +94,27 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar}) => {
           onClick={handleClick4}
         >
           <Box display="flex" alignItems="center">
-          <Box
-            sx={{
-              marginLeft: 'auto',
-            }}
-          >
-            <Fab
-              size="small"
-              color="secondary"
-              aria-label="add"
-              elevation="0"
-              sx={{
-                boxShadow: 'none',
-              }}
-            >
-              <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
-            </Fab>
-          </Box>
+  
+          {ctx.user.isOauth? 
+             <Avatar alt={shortName} src={ctx.user.oauthPicture} sx={{ width: 40, height: 40 }} />:
+             <Box
+             sx={{
+               marginLeft: 'auto',
+             }}
+           >
+             <Fab
+               size="small"
+               color="secondary"
+               aria-label="add"
+               elevation="0"
+               sx={{
+                 boxShadow: 'none',
+               }}
+             >
+               <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
+             </Fab>
+           </Box>
+            }
             <Box
               sx={{
                 display: {

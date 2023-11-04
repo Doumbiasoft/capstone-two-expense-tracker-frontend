@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import { Box, MenuItem, Typography, Divider,Fab } from '@mui/material';
+import { Box, MenuItem, Typography, Divider,Fab,Avatar } from '@mui/material';
 import FeatherIcon from 'feather-icons-react';
 import { useNavigate } from 'react-router-dom';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
@@ -28,24 +28,27 @@ export default function ProfileDropdown({setAnchorEl4}) {
     >
       <Box display="flex" alignItems="center">
 
-         <Box
-            sx={{
-              width: '60px',
-               height: '60px',
-           
-            }}
-          >
-            <Fab
-              color="secondary"
-              aria-label="add"
-              elevation="0"
-              sx={{
-                boxShadow: 'none',
-              }}
-            >
-                 <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
-            </Fab>
-        </Box>
+        {ctx.user.isOauth? 
+             <Avatar alt={shortName} src={ctx.user.oauthPicture} sx={{ width: 60, height: 60 }} />:
+             <Box
+             sx={{
+               width: '60px',
+                height: '60px',
+            
+             }}
+           >
+             <Fab
+               color="secondary"
+               aria-label="add"
+               elevation="0"
+               sx={{
+                 boxShadow: 'none',
+               }}
+             >
+                  <span style={{fontWeight:'bold'}}>{ctx.user.firstName?shortName:''}</span>
+             </Fab>
+         </Box>
+            }
         <Box
           sx={{
             ml: 2,
