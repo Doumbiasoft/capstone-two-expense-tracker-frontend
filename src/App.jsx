@@ -18,6 +18,7 @@ function App() {
   const theme = ThemeSettings();
   const customizer = useSelector((state) => state.CustomizerReducer);
 
+  const googleClientId =  import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(0);
@@ -77,7 +78,7 @@ function App() {
 
   };
   return (
-    <GoogleOAuthProvider clientId="1038492502004-6hvqmj0r7rqr8slpvo4nkhjvfavcubqa.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={googleClientId}>
     <CurrentUserContext.Provider value={ctx}>
       <ThemeProvider theme={theme}>
         <RTL direction={customizer.activeDir}>
