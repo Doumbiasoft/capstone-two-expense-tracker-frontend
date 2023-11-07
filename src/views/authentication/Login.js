@@ -32,13 +32,17 @@ export default function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [message, setMessage] = useState("");
   const [userGoogle, handleGoogle] = useGoogleOauth(null);
+  const [sent, setSent] = useState(false);
+
 
 
   useEffect(
     () => {
       async function OauthGoogle() {
         try {
+          
           if (userGoogle) {
+            setSent(true);
             const user = {
               firstName: userGoogle.given_name,
               lastName: userGoogle.family_name,
@@ -47,18 +51,17 @@ export default function Login() {
               oauthProvider:'Google',
               oauthPicture: userGoogle.picture
             };
-
-            //console.log("Oauth Google:", user);
-
             let _token = await Api.oAuth(user);
             if (_token !== undefined && _token !== "") {
               ctx.actions.handleToken(_token);
+              setSent(false);
               navigateTo("/");
             }
 
           }
         } catch (error) {
           ctx.actions.handleToken("");
+          setSent(false);
           setMessage(error);
         }
       };
@@ -199,7 +202,7 @@ export default function Login() {
                     >Create an account</Typography>
                   </Box>
                   <Box display="flex" alignItems="center" sx={{ height: '30px' }}>
-                    {isSubmitted ? <Spinner /> : <></>}
+                    {isSubmitted || sent ? <Spinner /> : <></>}
                   </Box>
                   <form onSubmit={handleSubmit}>
                     <Box

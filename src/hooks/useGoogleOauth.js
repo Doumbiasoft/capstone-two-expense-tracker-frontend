@@ -7,7 +7,6 @@ export const useGoogleOauth = (init) =>{
 const [googleToken, setGoogleToken] = useState(init);
 const [userGoogle, setUserGoogle] = useState(null);
 
-
   const handleGoogle = useGoogleLogin({
       onSuccess: (res) => { 
         setGoogleToken(res);
@@ -17,7 +16,6 @@ const [userGoogle, setUserGoogle] = useState(null);
   useEffect(
     () => {
         if (googleToken) {
-            
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleToken.access_token}`, {
                     headers: {
                         Authorization: `Bearer ${googleToken.access_token}`,
