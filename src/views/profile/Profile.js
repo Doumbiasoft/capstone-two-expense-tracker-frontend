@@ -7,7 +7,7 @@ import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import CustomTextField from '../../components/forms/custom-elements/CustomTextField';
 import CustomFormLabel from '../../components/forms/custom-elements/CustomFormLabel';
 import DashboardCard from '../../components/base-card/DashboardCard';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from '../../utils/swal.js';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import nameAcronym from '../../helpers/nameAcronym';
 import { useFormData } from '../../hooks/useFormData';

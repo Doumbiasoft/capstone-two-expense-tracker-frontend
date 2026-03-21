@@ -19,7 +19,7 @@ const BCrumb = [
 ];
 import PageContainer from '../../components/container/PageContainer';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from '../../utils/swal.js';
 
 
 export default function Categories() {

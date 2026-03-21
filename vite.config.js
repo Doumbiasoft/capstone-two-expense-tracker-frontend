@@ -8,52 +8,58 @@ import svgr from '@svgr/rollup';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    resolve: {
-        alias: {
-            src: resolve(__dirname, 'src'),
+  resolve: {
+    alias: {
+      src: resolve(__dirname, 'src'),
+    },
+  },
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.jsx?$/,
+    exclude: [],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+      plugins: [
+        {
+          name: 'load-js-files-as-jsx',
+          setup(build) {
+            build.onLoad({ filter: /src\\.*\.js$/ }, async (args) => ({
+              loader: 'jsx',
+              contents: await fs.readFile(args.path, 'utf8'),
+            }));
+          },
         },
+      ],
     },
-    esbuild: {
-        loader: 'jsx',
-        include: /src\/.*\.jsx?$/,
-        exclude: [],
-    },
-    optimizeDeps: {
-        esbuildOptions: {
-            loader: {
-                '.js': 'jsx',
-              },
-            plugins: [
-                {
-                    name: 'load-js-files-as-jsx',
-                    setup(build) {
-                        build.onLoad(
-                            { filter: /src\\.*\.js$/ },
-                            async (args) => ({
-                                loader: 'jsx',
-                                contents: await fs.readFile(args.path, 'utf8'),
-                            })
-                        );
-                    },
-                },
-            ],
-        },
-    },
-    test: {
-      globals: true,
-      environment: 'jsdom',
-      setupFiles: './src/setupTests.js',
-      exclude:[
-        '**/node_modules/**',
-        '**/.{idea,git,trunk}/**',
-     ]
-    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    exclude: ['**/node_modules/**', '**/.{idea,git,trunk}/**'],
+  },
 
+  // plugins: [react(),svgr({
+  //   exportAsDefault: true
+  // })],
 
-    
-    // plugins: [react(),svgr({
-    //   exportAsDefault: true
-    // })],
-
-    plugins: [svgr(), react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
+  },
+  plugins: [svgr(), react()],
+  server: {
+    host: true,
+    port: 5173,
+    watch: {
+      usePolling: true,
+    },
+  },
 });

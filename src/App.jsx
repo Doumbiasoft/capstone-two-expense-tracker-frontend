@@ -77,8 +77,7 @@ function App() {
     }
 
   };
-  return (
-    <GoogleOAuthProvider clientId={googleClientId}>
+  const content = (
     <CurrentUserContext.Provider value={ctx}>
       <ThemeProvider theme={theme}>
         <RTL direction={customizer.activeDir}>
@@ -87,8 +86,11 @@ function App() {
         </RTL>
       </ThemeProvider>
     </CurrentUserContext.Provider>
-    </GoogleOAuthProvider>
   );
+
+  return googleClientId ? (
+    <GoogleOAuthProvider clientId={googleClientId}>{content}</GoogleOAuthProvider>
+  ) : content;
 }
 
 export default App

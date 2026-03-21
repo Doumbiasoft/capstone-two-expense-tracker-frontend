@@ -9,7 +9,7 @@ import {
 } from './transactions-components';
 import Breadcrumb from '../../layouts/full-layout/breadcrumb/Breadcrumb';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from '../../utils/swal.js';
 import displayDateFormat from '../../helpers/displayDateFormat';
 import cultureInfo from '../../helpers/cultureInfo';
 
