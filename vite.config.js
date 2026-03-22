@@ -55,6 +55,11 @@ export default defineConfig({
     },
   },
   plugins: [svgr(), react()],
+  preview: {
+    host: true,
+    port: 5173,
+    allowedHosts: 'all',
+  },
   server: {
     host: true,
     port: 5173,
