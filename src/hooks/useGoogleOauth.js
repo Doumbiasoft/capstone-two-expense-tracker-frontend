@@ -18,7 +18,7 @@ export const useGoogleOauth = (init) => {
     if (googleToken) {
       axios
         .get(
-          `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${googleToken.access_token}`,
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleToken.access_token}`,
           {
             headers: {
               Authorization: `Bearer ${googleToken.access_token}`,
