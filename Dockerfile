@@ -20,7 +20,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Temporary workaround
-RUN npm install
+#RUN npm install
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 
