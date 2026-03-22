@@ -44,14 +44,4 @@ export default defineConfig({
     setupFiles: './src/setupTests.js',
     exclude: ['**/node_modules/**', '**/.{idea,git,trunk}/**'],
   },
-  // preview: {
-  //   host: true,
-  //   port: 5173,
-  //   allowedHosts: true,
-  // },
-  // server: {
-  //   host: true,
-  //   port: 5173,
-  //   watch: { usePolling: true },
-  // },
 });
