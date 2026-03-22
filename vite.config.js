@@ -3,10 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import fs from 'fs/promises';
 import svgr from '@svgr/rollup';
-/// <reference types="vitest" />
-/// <reference types="vite/client" />
 
-// https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
@@ -20,9 +17,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
+      loader: { '.js': 'jsx' },
       plugins: [
         {
           name: 'load-js-files-as-jsx',
@@ -36,22 +31,9 @@ export default defineConfig({
       ],
     },
   },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.js',
-    exclude: ['**/node_modules/**', '**/.{idea,git,trunk}/**'],
-  },
-
-  // plugins: [react(),svgr({
-  //   exportAsDefault: true
-  // })],
-
   css: {
     preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler',
-      },
+      scss: { api: 'modern-compiler' },
     },
   },
   plugins: [svgr(), react()],
@@ -63,8 +45,12 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
-    watch: {
-      usePolling: true,
-    },
+    watch: { usePolling: true },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    exclude: ['**/node_modules/**', '**/.{idea,git,trunk}/**'],
   },
 });
