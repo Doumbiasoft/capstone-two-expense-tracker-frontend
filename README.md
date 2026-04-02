@@ -1,14 +1,10 @@
-# Expense Tracker(Front-End(React))
-
-## Capstone 2
+# Expense Tracker(Front-End React)
 
 Create a personal finance app for tracking income, expenses. Implement data visualization to help users analyze their financial trends.
 
-**Host:** **[netlify](https://www.netlify.com)**
-**The REACT APP (Expense Tracker) is online at:**
-**https://expense-tracker-md.netlify.app**
 
-**REST API**: **[https://expense-tracker-backend-jnmy.onrender.com (Expense Tracker HOME-MADE API) ](https://expense-tracker-backend-jnmy.onrender.com)**
+**The REACT APP (Expense Tracker) is online at:**
+**https://expense-tracker.doumbiasoft.com**
 
 **SCREENSHOT**:
 ![img](/src/assets/images/readme-files/expense-tracker-dashboard.jpg)
